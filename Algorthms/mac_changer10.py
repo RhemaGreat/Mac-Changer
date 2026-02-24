@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#MAKING PROGRAM COMPATIBLE WITH PYTHON3
 
 import subprocess
 import optparse
@@ -28,7 +29,8 @@ def change_mac(interface, new_mac) :
 
 def get_current_mac(interface) :
     ifconfig_result = subprocess.check_output(["ifconfig", interface])
-    mac_address_search_result = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", ifconfig_result)
+#converting A BYTE OBJECT TO A STRING BY ADDING str BEFORE THE OBJECT
+    mac_address_search_result = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", str(ifconfig_result))
 
     if mac_address_search_result:
         return mac_address_search_result.group(0)
@@ -36,7 +38,6 @@ def get_current_mac(interface) :
         print("[-] MAC Address Not Found")
 
 options = get_arguments()
-
 current_mac = get_current_mac(options.interface)
 print("Current MAC Address: " + str(current_mac))
 
